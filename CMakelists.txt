@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.20)
+project(learnsfml)
+set(CMAKE_CXX_STANDARD 17)
+
+#tell cmake to go look at the right directory
+#(which is made arguably harder with sfml 3.X)
+set(SFML_PRFX /opt/homebrew/opt/sfml)
+include_directories(${SFML_PRFX}/include)
+link_directories(${SFML_PRFX}/lib)
+
+add_executable(learnsfml main.cpp)
+
+target_link_libraries(learnsfml PRIVATE sfml-window sfml-system sfml-graphics)
