@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.16)
+project(learnSFML)
+
+set(CMAKE_CXX_STANDARD 17)
+
+# Cambia questo percorso se necessario
+set(SFML_ROOT "/Library/Developer/SFML-2.6.2")
+include_directories(${SFML_ROOT}/include)
+link_directories(${SFML_ROOT}/lib)
+
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+file(GLOB_RECURSE HEADERS src/*.h)
+
+add_executable(learnSFML main.cpp ${SRC_FILES} ${HEADERS})
+
+# Link diretto ai nomi delle librerie .dylib (senza "lib" e senza estensione)
+target_link_libraries(learnSFML
+        ${SFML_ROOT}/lib/libsfml-graphics.dylib
+        ${SFML_ROOT}/lib/libsfml-window.dylib
+        ${SFML_ROOT}/lib/libsfml-system.dylib
+)
