@@ -1,7 +1,7 @@
 #include "src/RWindow.h"
 #include "src/Window.h"
 int main() {
-    RWindow MyWindow;
-    MyWindow.RWindow_circle();
+    const RWindow MyWindow;
+    MyWindow.SixtySeconds();
     return 0;
 }
