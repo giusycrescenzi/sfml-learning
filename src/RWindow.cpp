@@ -2,6 +2,7 @@
 // Created by Giuseppe Crescenzi on 25/05/25.
 //
 #include "RWindow.h"
+#include <iostream>
 using namespace sf;
 
 void RWindow::RWindow_circle() {
@@ -85,7 +86,7 @@ void RWindow::RotatingTriangles() const {
     c1.setOutlineThickness(2);
     c1.setOutlineColor(Color(224,225,221));
     // event
-    Event event;
+    Event event{};
     while (window.isOpen()) {
         if (window.pollEvent(event)) {
             if (event.type == Event::Closed)
@@ -125,11 +126,11 @@ void RWindow::Triangle() const {
 }
 
 void RWindow::SixtySeconds() const {
-    RenderWindow window(VideoMode(width,height),"60 seconds");
+    RenderWindow window(VideoMode(width,height),"useless ahh spinning thingy");
     window.setFramerateLimit(30);
     // draw the stopwatch
-    int l_width = 10;
-    int l_height = 100;
+    float l_width = 10;
+    float l_height = 100;
     ConvexShape l1 = triangle(Vector2f(l_width/2,0),Vector2f(-l_width/2,0),
         Vector2f(0,l_height),Vector2f(width/2, height/2),Vector2f(0,0));
     l1.setFillColor(Color(255,51,51));
@@ -212,6 +213,8 @@ ConvexShape RWindow::triangle(
     t.setPosition(temp);
     return t;
 }
+
+
 
 
 

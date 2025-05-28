@@ -8,14 +8,14 @@
 
 class RWindow {
 public:
-    explicit RWindow(const int w = 800, const int h = 600) :
+    explicit RWindow(const int w = 500, const int h = 350) :
         width(w), height(h) {}
     void RWindow_circle();
     sf::CircleShape move_circle(int dir);
     void RotatingTriangles() const;
     void Triangle() const;
     void SixtySeconds() const;
-    sf::ConvexShape triangle(const sf::Vector2f& p1,
+    [[nodiscard]] sf::ConvexShape triangle(const sf::Vector2f& p1,
         const sf::Vector2f& p2,
         const sf::Vector2f& p3,
         const sf::Vector2f& position,

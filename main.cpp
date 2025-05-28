@@ -1,7 +1,8 @@
 #include "src/RWindow.h"
 #include "src/Window.h"
+#include "src/FirstSimpleGame.h"
 int main() {
-    const RWindow MyWindow;
-    MyWindow.SixtySeconds();
+    const auto *block = new BlockSurvival();
+    block->run();
     return 0;
 }
