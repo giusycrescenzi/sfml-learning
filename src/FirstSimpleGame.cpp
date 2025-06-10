@@ -3,13 +3,13 @@
 //
 
 #include "FirstSimpleGame.h"
+#include <random>
 
 void InitShape(sf::RectangleShape &shape, const sf::Vector2f &position, const sf::Color &color) {
     shape.setPosition(position);
     shape.setFillColor(color);
     shape.setOrigin(shape.getSize().x / 2, shape.getSize().y / 2);
 }
-
 BlockSurvival::BlockSurvival() {
     // instantiate the two main elements
     player = std::make_unique<sf::RectangleShape>(sf::Vector2f(30,30));
@@ -17,22 +17,24 @@ BlockSurvival::BlockSurvival() {
     checkpoint = std::make_unique<sf::RectangleShape>(sf::Vector2f(20,20));
     InitShape(*checkpoint, endPos, sf::Color::Blue);
     // then create and store enemies in the vector
+    std::random_device rd;
+    float rand_x = 0;
+    float rand_y = 0;
     for (int i = 0; i < numEnemies; i++) {
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution distrib_x(1, width);
+        rand_x = static_cast<float>(distrib_x(gen));
+        std::uniform_int_distribution distrib_y(1, height);
+        rand_y= static_cast<float>(distrib_y(gen));
         auto enemy = std::make_unique<sf::RectangleShape>(sf::Vector2f(50,50));
-        InitShape(*enemy, sf::Vector2f(300,300), sf::Color::Red);
+        InitShape(*enemy, sf::Vector2f(rand_x, rand_y), sf::Color::Red);
         enemies.emplace_back(std::move(enemy));
     }
 }
-
 void BlockSurvival::run() const{
     sf::RenderWindow win(sf::VideoMode(width,height), "Red equals Bad");
     win.setFramerateLimit(60);
     sf::Event event {};
-    // since isKeyPressed doesn't work on macOS M1 and M2
-    bool RightPressed = false;
-    bool LeftPressed = false;
-    bool UpPressed = false;
-    bool DownPressed = false;
 
     while (win.isOpen()) {
         // HANDLE INPUT
@@ -41,57 +43,17 @@ void BlockSurvival::run() const{
             if (event.type == sf::Event::Closed) {
                 win.close();
             }
-            if (event.type == sf::Event::KeyPressed) {
-                switch (event.key.code) {
-                    case sf::Keyboard::Key::Right:
-                        RightPressed = true;
-                        break;
-                    case sf::Keyboard::Key::Left:
-                        LeftPressed = true;
-                        break;
-                    case sf::Keyboard::Key::Up:
-                        UpPressed = true;
-                        break;
-                    case sf::Keyboard::Key::Down:
-                        DownPressed = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            if (event.type == sf::Event::KeyReleased) {
-                switch (event.key.code) {
-                    case sf::Keyboard::Key::Right:
-                        RightPressed = false;
-                    break;
-                    case sf::Keyboard::Key::Left:
-                        LeftPressed = false;
-                    break;
-                    case sf::Keyboard::Key::Up:
-                        UpPressed = false;
-                    break;
-                    case sf::Keyboard::Key::Down:
-                        DownPressed = false;
-                    break;
-                    case sf::Keyboard::Key::Escape:
-                        win.close();
-                    break;
-                    default:
-                        break;
-                }
-            }
         }
-        // implement movement for the player square
-        if (RightPressed) {
-            player->move(right);
-        }
-        if (LeftPressed) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             player->move(left);
         }
-        if (UpPressed) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            player->move(right);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             player->move(up);
         }
-        if (DownPressed) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             player->move(down);
         }
         // Winning \ Losing condition

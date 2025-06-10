@@ -11,7 +11,9 @@ link_directories(${SFML_ROOT}/lib)
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 file(GLOB_RECURSE HEADERS src/*.h)
 
-add_executable(learnSFML main.cpp ${SRC_FILES} ${HEADERS})
+add_executable(learnSFML main.cpp ${SRC_FILES} ${HEADERS}
+        src/Animation.cpp
+        src/Animation.h)
 
 # Link diretto ai nomi delle librerie .dylib (senza "lib" e senza estensione)
 target_link_libraries(learnSFML

@@ -8,8 +8,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-
-void InitShape (sf::RectangleShape& shape, const sf::Vector2f& position, const sf::Color& color);
+void InitShape (sf::RectangleShape& shape,
+    const sf::Vector2f& position, const sf::Color& color);
 
 inline sf::Vector2f right {5,0};
 inline sf::Vector2f left {-5,0};
@@ -24,7 +24,7 @@ private:
     std::unique_ptr<sf::RectangleShape> player;
     std::unique_ptr<sf::RectangleShape> checkpoint;
     std::vector<std::unique_ptr<sf::RectangleShape>> enemies;
-    int numEnemies {1};
+    int numEnemies {6};
     sf::Vector2f startPos{0,0};
     sf::Vector2f endPos{500, 500};
     bool win {false};
@@ -32,6 +32,5 @@ private:
     int width{600};
     int height {600};
 };
-
 
 #endif //FIRSTSIMPLEGAME_H
